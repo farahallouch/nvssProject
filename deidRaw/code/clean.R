@@ -61,6 +61,78 @@ table(natl2016_2017$f_mhisp, useNA = "always") # probs not needed
 table(natl2016_2017$mracehisp, useNA = "always") # 8 to NA
 table(natl2016_2017$dmar, useNA = "always") 
 table(natl2016_2017$mar_imp, useNA = "always") # probs not needed
+table(natl2016_2017$meduc, useNA = "always") # 9 to NA
+table(natl2016_2017$f_meduc, useNA = "always") # probs not needed
+summary(natl2016_2017$priorlive) # 99 to NA
+summary(natl2016_2017$priordead) # 99 to NA
+summary(natl2016_2017$priorterm) # 99 to NA
+summary(natl2016_2017$tbo_rec) # 9 to NA
+summary(natl2016_2017$precare) # 99 to NA
+table(natl2016_2017$f_mpcb, useNA = "always") # probs not needed
+summary(natl2016_2017$previs) # 99 to NA
+table(natl2016_2017$f_tpcv, useNA = "always") # probs not needed
+table(natl2016_2017$wic, useNA = "always") # U to NA ; character to numeric 
+table(natl2016_2017$f_wic, useNA = "always") # probs not needed
+summary(natl2016_2017$cig_0) # 99 to NA
+summary(natl2016_2017$cig_1) # 99 to NA
+summary(natl2016_2017$cig_2) # 99 to NA
+summary(natl2016_2017$cig_3) # 99 to NA
+table(natl2016_2017$f_cigs_0, useNA = "always") # probs not needed
+table(natl2016_2017$f_cigs_1, useNA = "always") # probs not needed
+table(natl2016_2017$f_cigs_2, useNA = "always") # probs not needed
+table(natl2016_2017$f_cigs_3, useNA = "always") # probs not needed
+summary(natl2016_2017$bmi) # 99.90 to NA
+table(natl2016_2017$rf_pdiab, useNA = "always") # U to NA ; character to numeric 
+table(natl2016_2017$rf_gdiab, useNA = "always") # U to NA ; character to numeric 
+table(natl2016_2017$rf_phype, useNA = "always") # U to NA ; character to numeric 
+table(natl2016_2017$rf_ghype, useNA = "always") # U to NA ; character to numeric 
+table(natl2016_2017$rf_ehype, useNA = "always") # U to NA ; character to numeric 
+table(natl2016_2017$rf_ppterm, useNA = "always") # U to NA ; character to numeric 
+table(natl2016_2017$f_rf_pdiab, useNA = "always") # probs not needed
+table(natl2016_2017$f_rf_gdiab, useNA = "always") # probs not needed
+table(natl2016_2017$f_rf_phyper, useNA = "always") # probs not needed
+table(natl2016_2017$f_rf_ghyper, useNA = "always") # probs not needed
+table(natl2016_2017$f_rf_eclamp, useNA = "always") # probs not needed
+table(natl2016_2017$f_rf_ppb, useNA = "always") # probs not needed
+table(natl2016_2017$ob_ecvs, useNA = "always") # U to NA ; character to numeric 
+table(natl2016_2017$ob_ecvf, useNA = "always") # U to NA ; character to numeric 
+table(natl2016_2017$f_ob_succ, useNA = "always") # probs not needed
+table(natl2016_2017$f_ob_fail, useNA = "always") # probs not needed
+table(natl2016_2017$ld_indl, useNA = "always") # U to NA ; character to numeric 
+table(natl2016_2017$ld_augm, useNA = "always") # U to NA ; character to numeric 
+table(natl2016_2017$ld_ster, useNA = "always") # U to NA ; character to numeric 
+table(natl2016_2017$ld_antb, useNA = "always") # U to NA ; character to numeric 
+table(natl2016_2017$ld_chor, useNA = "always") # U to NA ; character to numeric 
+table(natl2016_2017$ld_anes, useNA = "always") # U to NA ; character to numeric 
+table(natl2016_2017$f_ld_indl, useNA = "always") # probs not needed
+table(natl2016_2017$f_ld_augm, useNA = "always") # probs not needed
+table(natl2016_2017$f_ld_ster, useNA = "always") # probs not needed
+table(natl2016_2017$f_ld_antb, useNA = "always") # probs not needed
+table(natl2016_2017$f_ld_chor, useNA = "always") # probs not needed
+table(natl2016_2017$no_lbrdlv, useNA = "always") # probs not needed
+table(natl2016_2017$me_pres, useNA = "always") # 9 to NA
+table(natl2016_2017$me_rout, useNA = "always") # 9 to NA
+table(natl2016_2017$f_me_pres, useNA = "always") # probs not needed
+table(natl2016_2017$f_me_rout, useNA = "always") # probs not needed
+table(natl2016_2017$mm_mtr, useNA = "always") # U to NA ; character to numeric 
+table(natl2016_2017$mm_rupt, useNA = "always") # U to NA ; character to numeric 
+table(natl2016_2017$mm_uhyst, useNA = "always") # U to NA ; character to numeric 
+table(natl2016_2017$mm_aicu, useNA = "always") # U to NA ; character to numeric 
+table(natl2016_2017$f_mm_mtr, useNA = "always") # probs not needed
+table(natl2016_2017$f_mm_rupt, useNA = "always") # probs not needed
+table(natl2016_2017$f_mm_uhyst, useNA = "always") # probs not needed
+table(natl2016_2017$f_mm_aicu, useNA = "always") # probs not needed
+table(natl2016_2017$pay_rec, useNA = "always") # 9 to NA
+table(natl2016_2017$f_pay, useNA = "always") # probs not needed
+summary(natl2016_2017$apgar5) # 99 to NA
+table(natl2016_2017$f_apgar5, useNA = "always") # probs not needed
+table(natl2016_2017$sex, useNA = "always")
+table(natl2016_2017$oegest_r10, useNA = "always") # 99 to NA
+summary(natl2016_2017$dbwt) # 9999 to NA
+table(natl2016_2017$ab_aven6, useNA = "always") # U to NA ; character to numeric 
+table(natl2016_2017$ab_seiz, useNA = "always") # U to NA ; character to numeric 
+table(natl2016_2017$f_ab_vent6, useNA = "always") # probs not needed
+table(natl2016_2017$f_ab_seiz, useNA = "always") # probs not needed
 
 
 
