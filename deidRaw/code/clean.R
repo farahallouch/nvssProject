@@ -1,3 +1,10 @@
+###################################
+# Farah Allouch 
+# 2/8/2022
+# Cleaning birth certificate data
+# Data from https://www.nber.org/research/data/vital-statistics-natality-birth-data
+###################################
+
 rm(list = ls())
 options(scipen = 999)
 
@@ -129,7 +136,6 @@ natl2020 <- natl2020 %>%
          ab_seiz = AB_SEIZ)
 
 natl2016_2020 <- rbind(natl2016, natl2017, natl2018, natl2019, natl2020) # missing RF_PPTERM, ME_PRES AND ME_ROUT
-save(natl2016_2020, file = "deidRaw/output/natl2016_2020.Rdata")
 
 rm(natl2016)
 rm(natl2017)
@@ -137,14 +143,7 @@ rm(natl2018)
 rm(natl2019)
 rm(natl2020)
 
-natl2016_2020_gh <- natl2016_2020 %>% 
-  filter(rf_ghype == "Y" |
-           rf_ehype == "Y")
-
-rm(natl2016_2020)
-save(natl2016_2020_gh, file = "deidRaw/output/natl2016_2020.Rdata")
-
-natl2016_2020_gh <- natl2016_2020_gh %>% 
+natl2016_2020 <- natl2016_2020 %>% 
   rename(year = dob_yy,
          facility = bfacil3,
          mom_age = mager,
@@ -186,11 +185,13 @@ natl2016_2020_gh <- natl2016_2020_gh %>%
          birthweight = dbwt,
          assisted_ventilation_six_hr = ab_aven6,
          baby_seizures = ab_seiz) %>% 
-  filter(!is.na(year)) %>% 
-  mutate(facility = ifelse(facility == 3, NA, facility),
-         mom_nativity = ifelse(mom_nativity == 3, NA, mom_nativity),
-         mom_race_ethnicity = ifelse(mom_race_ethnicity == 8, NA, mom_race_ethnicity),
-         mom_educ = ifelse(mom_educ == 9, NA, mom_educ),
+  filter(!is.na(year))
+
+natl2016_2020 <- natl2016_2020 %>% 
+  mutate(facility = as.factor(ifelse(facility == 3, NA, facility)),
+         mom_nativity = as.factor(ifelse(mom_nativity == 3, NA, mom_nativity)),
+         mom_race_ethnicity = as.factor(ifelse(mom_race_ethnicity == 8, NA, mom_race_ethnicity)),
+         mom_educ = as.factor(ifelse(mom_educ == 9, NA, mom_educ)),
          prior_births_living = as.numeric(prior_births_living),
          prior_births_living = ifelse(prior_births_living == 99, NA, prior_births_living),
          prior_births_dead = as.numeric(prior_births_dead),
@@ -200,49 +201,84 @@ natl2016_2020_gh <- natl2016_2020_gh %>%
          total_birth_order = ifelse(total_birth_order == 9, NA, total_birth_order),
          nb_prenatal_visits = as.numeric(nb_prenatal_visits),
          nb_prenatal_visits = ifelse(nb_prenatal_visits == 99, NA, nb_prenatal_visits),
-         )
+         wic = ifelse(wic == "Y", "1",
+                      ifelse(wic == "N", "0", NA)),
+         wic = as.factor(wic),
+         nb_cig_before_preg = as.numeric(nb_cig_before_preg),
+         nb_cig_before_preg = ifelse(nb_cig_before_preg == 99, NA, nb_cig_before_preg),
+         nb_cig_first_trimester = as.numeric(nb_cig_first_trimester),
+         nb_cig_first_trimester = ifelse(nb_cig_first_trimester == 99, NA, nb_cig_first_trimester),
+         nb_cig_second_trimester = as.numeric(nb_cig_second_trimester),
+         nb_cig_second_trimester = ifelse(nb_cig_second_trimester == 99, NA, nb_cig_second_trimester),
+         nb_cig_third_trimester = as.numeric(nb_cig_third_trimester),
+         nb_cig_third_trimester = ifelse(nb_cig_third_trimester == 99, NA, nb_cig_third_trimester),
+         bmi = as.numeric(bmi),
+         bmi = ifelse(bmi == 99.90, NA, bmi),
+         pre_preg_diabetes = ifelse(pre_preg_diabetes == "Y", 1,
+                                    ifelse(pre_preg_diabetes == "N", 0, NA)),
+         pre_preg_diabetes = as.factor(pre_preg_diabetes),
+         gest_diabetes = ifelse(gest_diabetes == "Y", 1,
+                                    ifelse(gest_diabetes == "N", 0, NA)),
+         gest_diabetes = as.factor(gest_diabetes),
+         pre_preg_htn = ifelse(pre_preg_htn == "Y", 1,
+                                ifelse(pre_preg_htn == "N", 0, NA)),
+         pre_preg_htn = as.factor(pre_preg_htn),
+         gest_htn = ifelse(gest_htn == "Y", 1,
+                               ifelse(gest_htn == "N", 0, NA)),
+         gest_htn = as.factor(gest_htn),
+         eclampsia = ifelse(eclampsia == "Y", 1,
+                            ifelse(eclampsia == "N", 0, NA)),
+         eclampsia = as.factor(eclampsia),
+         success_external_cephalic = ifelse(success_external_cephalic == "Y", 1,
+                            ifelse(success_external_cephalic == "N", 0, NA)),
+         success_external_cephalic = as.factor(success_external_cephalic),
+         fail_external_cephalic = ifelse(fail_external_cephalic == "Y", 1,
+                                         ifelse(fail_external_cephalic == "N", 0, NA)),
+         fail_external_cephalic = as.factor(fail_external_cephalic),
+         labor_induction = ifelse(labor_induction == "Y", 1,
+                                     ifelse(labor_induction == "N", 0, NA)),
+         labor_induction = as.factor(labor_induction),
+         labor_augmentation = ifelse(labor_augmentation == "Y", 1,
+                                     ifelse(labor_augmentation == "N", 0, NA)),
+         labor_augmentation = as.factor(labor_augmentation),
+         labor_steroids = ifelse(labor_steroids == "Y", 1,
+                                     ifelse(labor_steroids == "N", 0, NA)),
+         labor_steroids = as.factor(labor_steroids),
+         labor_antibiotics = ifelse(labor_antibiotics == "Y", 1,
+                                 ifelse(labor_antibiotics == "N", 0, NA)),
+         labor_antibiotics = as.factor(labor_antibiotics),
+         labor_anesthesia = ifelse(labor_anesthesia == "Y", 1,
+                                    ifelse(labor_anesthesia == "N", 0, NA)),
+         labor_anesthesia = as.factor(labor_anesthesia),
+         labor_chorioamniotitis = ifelse(labor_chorioamniotitis == "Y", 1,
+                                   ifelse(labor_chorioamniotitis == "N", 0, NA)),
+         labor_chorioamniotitis = as.factor(labor_chorioamniotitis),
+         maternal_transfusion = ifelse(maternal_transfusion == "Y", 1,
+                                         ifelse(maternal_transfusion == "N", 0, NA)),
+         maternal_transfusion = as.factor(maternal_transfusion),
+         ruptured_uterus = ifelse(ruptured_uterus == "Y", 1,
+                                       ifelse(ruptured_uterus == "N", 0, NA)),
+         ruptured_uterus = as.factor(ruptured_uterus),
+         unplanned_hysterectomy = ifelse(unplanned_hysterectomy == "Y", 1,
+                                  ifelse(unplanned_hysterectomy == "N", 0, NA)),
+         unplanned_hysterectomy = as.factor(unplanned_hysterectomy),
+         maternal_icu = ifelse(maternal_icu == "Y", 1,
+                                         ifelse(maternal_icu == "N", 0, NA)),
+         maternal_icu = as.factor(maternal_icu),
+         payer = as.factor(ifelse(payer == 9, NA, payer)),
+         five_min_apgar = as.numeric(five_min_apgar),
+         five_min_apgar = ifelse(five_min_apgar == 99, NA, five_min_apgar),
+         baby_sex = as.factor(ifelse(baby_sex == "M", "0", "1")),
+         gest_age = as.numeric(ifelse(gest_age == 99, NA, gest_age)),
+         birthweight = as.numeric(birthweight),
+         birthweight = ifelse(birthweight == 9999, NA, birthweight),
+         assisted_ventilation_six_hr = ifelse(assisted_ventilation_six_hr == "Y", "1",
+                               ifelse(assisted_ventilation_six_hr == "N", "0", NA)),
+         assisted_ventilation_six_hr = as.factor(assisted_ventilation_six_hr),
+         baby_seizures = ifelse(baby_seizures == "Y", "1",
+                                              ifelse(baby_seizures == "N", "0", NA)),
+         baby_seizures = as.factor(baby_seizures))
   
+sapply(natl2016_2020[1:43], summary)
 
-table(natl2016_2020_gh$year, useNA = "always") # 57 NA
-table(natl2016_2020_gh$facility, useNA = "always") # 3 to NA + 57 NA
-summary(natl2016_2020_gh$mom_age) # 57 NA
-table(natl2016_2020_gh$mom_nativity, useNA = "always") # 3 to NA
-table(natl2016_2020_gh$mom_race_ethnicity, useNA = "always") # 8 to NA
-table(natl2016_2020_gh$mom_marital_status, useNA = "always")
-table(natl2016_2020_gh$mom_educ, useNA = "always") # 9 to NA
-summary(natl2016_2020_gh$prior_births_living) # 99 to NA; character to numeric
-summary(natl2016_2020_gh$prior_births_dead) # 99 to NA; character to numeric
-summary(natl2016_2020_gh$prior_terminations) # 99 to NA; character to numeric
-summary(natl2016_2020$total_birth_order) # 9 to NA
-table(natl2016_2020$nb_prenatal_visits, useNA = "always") # 99 to NA; character to numeric
-table(natl2016_2020$wic, useNA = "always") # U to NA; character to numeric
-
-table(natl2016_2020$nb_cig_before_preg, useNA = "always") # 99 to NA; character to numeric
-table(natl2016_2020$nb_cig_first_trimester, useNA = "always") # 99 to NA; character to numeric
-table(natl2016_2020$nb_cig_second_trimester, useNA = "always") # 99 to NA; character to numeric
-table(natl2016_2020$nb_cig_third_trimester, useNA = "always") # 99 to NA; character to numeric
-summary(natl2016_2020$bmi) # 99.90 to NA
-table(natl2016_2020$pre_preg_diabetes, useNA = "always") # U to NA ; character to numeric
-table(natl2016_2020$gest_diabetes, useNA = "always") # U to NA ; character to numeric
-table(natl2016_2020$pre_preg_htn, useNA = "always") # U to NA ; character to numeric
-table(natl2016_2020$gest_htn, useNA = "always") # U to NA ; character to numeric
-table(natl2016_2020$eclampsia, useNA = "always") # U to NA ; character to numeric
-table(natl2016_2020$success_external_cephalic, useNA = "always") # U to NA ; character to numeric
-table(natl2016_2020$fail_external_cephalic, useNA = "always") # U to NA ; character to numeric
-table(natl2016_2020$labor_induction, useNA = "always") # U to NA ; character to numeric
-table(natl2016_2020$labor_augmentation, useNA = "always") # U to NA ; character to numeric
-table(natl2016_2020$labor_steroids, useNA = "always") # U to NA ; character to numeric
-table(natl2016_2020$labor_antibiotics, useNA = "always") # U to NA ; character to numeric
-table(natl2016_2020$labor_anesthesia, useNA = "always") # U to NA ; character to numeric
-table(natl2016_2020$labor_chorioamniotitis, useNA = "always") # U to NA ; character to numeric
-table(natl2016_2020$maternal_transfusion, useNA = "always") # U to NA ; character to numeric
-table(natl2016_2020$ruptured_uterus, useNA = "always") # U to NA ; character to numeric
-table(natl2016_2020$unplanned_hysterectomy, useNA = "always") # U to NA ; character to numeric
-table(natl2016_2020$maternal_icu, useNA = "always") # U to NA ; character to numeric
-table(natl2016_2020$payer, useNA = "always") # 9 to NA
-table(natl2016_2020$five_min_apgar, useNA = "always") # 99 to NA; character to numeric
-table(natl2016_2020$baby_sex, useNA = "always") # character to numeric
-table(natl2016_2020$gest_age, useNA = "always") # 99 to NA
-table(natl2016_2020$birthweight, useNA = "always") # 9999 to NA; character to numeric
-table(natl2016_2020$assisted_ventilation_six_hr, useNA = "always") # U to NA ; character to numeric
-table(natl2016_2020$baby_seizures, useNA = "always") # U to NA ; character to numeric
+save(natl2016_2020, file = "deidRaw/output/natl2016_2020.Rdata")
