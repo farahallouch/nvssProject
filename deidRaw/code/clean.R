@@ -16,12 +16,11 @@ natl2016 <- natl2016 %>%
   select(dob_yy, bfacil3,
          mager, mbstate_rec, mracehisp, dmar, meduc,
          priorlive, priordead, priorterm, tbo_rec, precare, previs, wic, cig_0, cig_1, cig_2, cig_3, bmi,
-         rf_pdiab, rf_gdiab, rf_phype, rf_ghype, rf_ehype, # rf_ppterm,
+         rf_pdiab, rf_gdiab, rf_phype, rf_ghype, rf_ehype, 
          ob_ecvs, ob_ecvf,
          ld_indl, ld_augm, ld_ster, ld_antb, ld_chor, ld_anes,
-         # me_pres, me_rout,
-         mm_mtr, mm_rupt, mm_uhyst, mm_aicu, pay_rec, apgar5, sex, oegest_r10, dbwt,
-         ab_aven6, ab_seiz)
+         mm_mtr, mm_rupt, mm_uhyst, mm_aicu, pay_rec, apgar5, sex, oegest_comb, dbwt,
+         ab_aven6, ab_seiz, ab_nicu)
 
 natl2017 <- haven::read_stata("deidRaw/input/natl2017.dta")
 
@@ -29,12 +28,11 @@ natl2017 <- natl2017 %>%
   select(dob_yy, bfacil3,
          mager, mbstate_rec, mracehisp, dmar, meduc,
          priorlive, priordead, priorterm, tbo_rec, precare, previs, wic, cig_0, cig_1, cig_2, cig_3, bmi,
-         rf_pdiab, rf_gdiab, rf_phype, rf_ghype, rf_ehype, # rf_ppterm,
+         rf_pdiab, rf_gdiab, rf_phype, rf_ghype, rf_ehype,
          ob_ecvs, ob_ecvf,
          ld_indl, ld_augm, ld_ster, ld_antb, ld_chor, ld_anes,
-         # me_pres, me_rout,
-         mm_mtr, mm_rupt, mm_uhyst, mm_aicu, pay_rec, apgar5, sex, oegest_r10, dbwt,
-         ab_aven6, ab_seiz)
+         mm_mtr, mm_rupt, mm_uhyst, mm_aicu, pay_rec, apgar5, sex, oegest_comb, dbwt,
+         ab_aven6, ab_seiz, ab_nicu)
 
 natl2018 <- haven::read_stata("deidRaw/input/natl2018.dta")
 
@@ -42,12 +40,11 @@ natl2018 <- natl2018 %>%
   select(dob_yy, bfacil3,
          mager, mbstate_rec, mracehisp, dmar, meduc,
          priorlive, priordead, priorterm, tbo_rec, precare, previs, wic, cig_0, cig_1, cig_2, cig_3, bmi,
-         rf_pdiab, rf_gdiab, rf_phype, rf_ghype, rf_ehype, # rf_ppterm,
+         rf_pdiab, rf_gdiab, rf_phype, rf_ghype, rf_ehype,
          ob_ecvs, ob_ecvf,
          ld_indl, ld_augm, ld_ster, ld_antb, ld_chor, ld_anes,
-         # me_pres, me_rout,
-         mm_mtr, mm_rupt, mm_uhyst, mm_aicu, pay_rec, apgar5, sex, oegest_r10, dbwt,
-         ab_aven6, ab_seiz)
+         mm_mtr, mm_rupt, mm_uhyst, mm_aicu, pay_rec, apgar5, sex, oegest_comb, dbwt,
+         ab_aven6, ab_seiz, ab_nicu)
 
 natl2019 <- haven::read_stata("deidRaw/input/natl2019.dta")
 
@@ -55,12 +52,11 @@ natl2019 <- natl2019 %>%
   select(DOB_YY, BFACIL3,
          mager, MBSTATE_REC, mracehisp, dmar, meduc,
          priorlive, priordead, priorterm, TBO_REC, precare, previs, wic, CIG_0, CIG_1, CIG_2, CIG_3, bmi,
-         RF_PDIAB, RF_GDIAB, RF_PHYPE, RF_GHYPE, RF_EHYPE, # MISSING RF_PPTERM
+         RF_PDIAB, RF_GDIAB, RF_PHYPE, RF_GHYPE, RF_EHYPE,
          OB_ECVS, OB_ECVF,
          LD_INDL, LD_AUGM, LD_STER, LD_ANTB, LD_CHOR, LD_ANES,
-         # MISSING ME_PRES AND ME_ROUT
-         MM_MTR, MM_RUPT, MM_UHYST, MM_AICU, PAY_REC, APGAR5, sex, OEGest_R10, dbwt,
-         AB_AVEN6, AB_SEIZ) %>% 
+         MM_MTR, MM_RUPT, MM_UHYST, MM_AICU, PAY_REC, APGAR5, sex, OEGest_Comb, dbwt,
+         AB_AVEN6, AB_SEIZ, AB_NICU) %>% 
   rename(dob_yy = DOB_YY,
          bfacil3 = BFACIL3,
          mbstate_rec = MBSTATE_REC,
@@ -88,9 +84,10 @@ natl2019 <- natl2019 %>%
          mm_aicu = MM_AICU,
          pay_rec = PAY_REC,
          apgar5 = APGAR5,
-         oegest_r10 = OEGest_R10,
+         oegest_comb = OEGest_Comb,
          ab_aven6 = AB_AVEN6,
-         ab_seiz = AB_SEIZ)
+         ab_seiz = AB_SEIZ,
+         ab_nicu = AB_NICU)
 
 natl2020 <- haven::read_stata("deidRaw/input/natl2020.dta")
 
@@ -98,12 +95,11 @@ natl2020 <- natl2020 %>%
   select(DOB_YY, BFACIL3,
          mager, MBSTATE_REC, mracehisp, dmar, meduc,
          priorlive, priordead, priorterm, TBO_REC, precare, previs, wic, CIG_0, CIG_1, CIG_2, CIG_3, bmi,
-         RF_PDIAB, RF_GDIAB, RF_PHYPE, RF_GHYPE, RF_EHYPE, # RF_PPTERM,
+         RF_PDIAB, RF_GDIAB, RF_PHYPE, RF_GHYPE, RF_EHYPE, 
          OB_ECVS, OB_ECVF,
          LD_INDL, LD_AUGM, LD_STER, LD_ANTB, LD_CHOR, LD_ANES,
-         # MISSING ME_PRES AND ME_ROUT
-         MM_MTR, MM_RUPT, MM_UHYST, MM_AICU, PAY_REC, APGAR5, sex, OEGest_R10, dbwt,
-         AB_AVEN6, AB_SEIZ) %>% 
+         MM_MTR, MM_RUPT, MM_UHYST, MM_AICU, PAY_REC, APGAR5, sex, OEGest_Comb, dbwt,
+         AB_AVEN6, AB_SEIZ, AB_NICU) %>% 
   rename(dob_yy = DOB_YY,
          bfacil3 = BFACIL3,
          mbstate_rec = MBSTATE_REC,
@@ -131,11 +127,12 @@ natl2020 <- natl2020 %>%
          mm_aicu = MM_AICU,
          pay_rec = PAY_REC,
          apgar5 = APGAR5,
-         oegest_r10 = OEGest_R10,
+         oegest_comb = OEGest_Comb,
          ab_aven6 = AB_AVEN6,
-         ab_seiz = AB_SEIZ)
+         ab_seiz = AB_SEIZ,
+         ab_nicu = AB_NICU)
 
-natl2016_2020 <- rbind(natl2016, natl2017, natl2018, natl2019, natl2020) # missing RF_PPTERM, ME_PRES AND ME_ROUT
+natl2016_2020 <- rbind(natl2016, natl2017, natl2018, natl2019, natl2020) 
 
 rm(natl2016)
 rm(natl2017)
@@ -181,10 +178,11 @@ natl2016_2020 <- natl2016_2020 %>%
          payer = pay_rec,
          five_min_apgar = apgar5,
          baby_sex = sex,
-         gest_age = oegest_r10,
+         gest_age = oegest_comb,
          birthweight = dbwt,
          assisted_ventilation_six_hr = ab_aven6,
-         baby_seizures = ab_seiz) %>% 
+         baby_seizures = ab_seiz,
+         baby_nicu = ab_nicu) %>% 
   filter(!is.na(year))
 
 natl2016_2020 <- natl2016_2020 %>% 
@@ -199,6 +197,8 @@ natl2016_2020 <- natl2016_2020 %>%
          prior_terminations = as.numeric(prior_terminations),
          prior_terminations = ifelse(prior_terminations == 99, NA, prior_terminations),
          total_birth_order = ifelse(total_birth_order == 9, NA, total_birth_order),
+         month_prenatal_start = as.numeric(month_prenatal_start),
+         month_prenatal_start = ifelse(month_prenatal_start == 99, NA, month_prenatal_start),
          nb_prenatal_visits = as.numeric(nb_prenatal_visits),
          nb_prenatal_visits = ifelse(nb_prenatal_visits == 99, NA, nb_prenatal_visits),
          wic = ifelse(wic == "Y", "1",
@@ -277,8 +277,11 @@ natl2016_2020 <- natl2016_2020 %>%
          assisted_ventilation_six_hr = as.factor(assisted_ventilation_six_hr),
          baby_seizures = ifelse(baby_seizures == "Y", "1",
                                               ifelse(baby_seizures == "N", "0", NA)),
-         baby_seizures = as.factor(baby_seizures))
+         baby_seizures = as.factor(baby_seizures),
+         baby_nicu = ifelse(baby_nicu == "Y", "1",
+                                ifelse(baby_nicu == "N", "0", NA)),
+         baby_nicu = as.factor(baby_nicu))
   
-sapply(natl2016_2020[1:43], summary)
+sapply(natl2016_2020[1:44], summary)
 
 save(natl2016_2020, file = "deidRaw/output/natl2016_2020.Rdata")
