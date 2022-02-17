@@ -159,7 +159,7 @@ rm(natl2018)
 rm(natl2019)
 rm(natl2020)
 
-# pausing here to see if SAS 2019 dataset has missing vars
+# start here
 
 natl2016_2020 <- natl2016_2020 %>% 
   rename(year = dob_yy,
@@ -197,14 +197,21 @@ natl2016_2020 <- natl2016_2020 %>%
          unplanned_hysterectomy = mm_uhyst,
          maternal_icu = mm_aicu,
          payer = pay_rec,
-         five_min_apgar = apgar5,
+         five_min_apgar = apgar5, 
+         plurality = dplural,
          baby_sex = sex,
          gest_age = oegest_comb,
          birthweight = dbwt,
          assisted_ventilation_six_hr = ab_aven6,
          baby_seizures = ab_seiz,
-         baby_nicu = ab_nicu) %>% 
-  filter(!is.na(year))
+         baby_nicu = ab_nicu,
+         anencephaly = ca_anen,
+         spina_bifida = ca_mnsb,
+         cyanotic_congen_hd = ca_cchd,
+         congen_diaph_hernia = ca_cdh,
+         omphalocele = ca_omph,
+         gastroschisis = ca_gast,
+         limb_reduction = ca_limb) 
 
 natl2016_2020 <- natl2016_2020 %>% 
   mutate(facility = as.factor(ifelse(facility == 3, NA, facility)),
@@ -301,8 +308,29 @@ natl2016_2020 <- natl2016_2020 %>%
          baby_seizures = as.factor(baby_seizures),
          baby_nicu = ifelse(baby_nicu == "Y", "1",
                                 ifelse(baby_nicu == "N", "0", NA)),
-         baby_nicu = as.factor(baby_nicu))
+         baby_nicu = as.factor(baby_nicu),
+         anencephaly = ifelse(anencephaly == "Y", "1",
+                              ifelse(anencephaly == "N", "0", NA)),
+         anencephaly = as.factor(anencephaly),
+         spina_bifida = ifelse(spina_bifida == "Y", "1",
+                              ifelse(spina_bifida == "N", "0", NA)),
+         spina_bifida = as.factor(spina_bifida),
+         cyanotic_congen_hd = ifelse(cyanotic_congen_hd == "Y", "1",
+                               ifelse(cyanotic_congen_hd == "N", "0", NA)),
+         cyanotic_congen_hd = as.factor(cyanotic_congen_hd),
+         congen_diaph_hernia = ifelse(congen_diaph_hernia == "Y", "1",
+                                     ifelse(congen_diaph_hernia == "N", "0", NA)),
+         congen_diaph_hernia = as.factor(congen_diaph_hernia),
+         omphalocele = ifelse(omphalocele == "Y", "1",
+                                      ifelse(omphalocele == "N", "0", NA)),
+         omphalocele = as.factor(omphalocele),
+         gastroschisis = ifelse(gastroschisis == "Y", "1",
+                              ifelse(gastroschisis == "N", "0", NA)),
+         gastroschisis = as.factor(gastroschisis),
+         limb_reduction = ifelse(limb_reduction == "Y", "1",
+                                ifelse(limb_reduction == "N", "0", NA)),
+         limb_reduction = as.factor(limb_reduction))  
   
-sapply(natl2016_2020[1:44], summary)
+sapply(natl2016_2020[1:52], summary)
 
 save(natl2016_2020, file = "deidRaw/output/natl2016_2020.Rdata")
