@@ -19,8 +19,9 @@ natl2016 <- natl2016 %>%
          rf_pdiab, rf_gdiab, rf_phype, rf_ghype, rf_ehype, 
          ob_ecvs, ob_ecvf,
          ld_indl, ld_augm, ld_ster, ld_antb, ld_chor, ld_anes,
-         mm_mtr, mm_rupt, mm_uhyst, mm_aicu, pay_rec, apgar5, sex, oegest_comb, dbwt,
-         ab_aven6, ab_seiz, ab_nicu)
+         mm_mtr, mm_rupt, mm_uhyst, mm_aicu, pay_rec, apgar5, dplural, sex, oegest_comb, dbwt,
+         ab_aven6, ab_seiz, ab_nicu,
+         ca_anen, ca_mnsb, ca_cchd, ca_cdh, ca_omph, ca_gast, ca_limb) 
 
 natl2017 <- haven::read_stata("deidRaw/input/natl2017.dta")
 
@@ -31,8 +32,9 @@ natl2017 <- natl2017 %>%
          rf_pdiab, rf_gdiab, rf_phype, rf_ghype, rf_ehype,
          ob_ecvs, ob_ecvf,
          ld_indl, ld_augm, ld_ster, ld_antb, ld_chor, ld_anes,
-         mm_mtr, mm_rupt, mm_uhyst, mm_aicu, pay_rec, apgar5, sex, oegest_comb, dbwt,
-         ab_aven6, ab_seiz, ab_nicu)
+         mm_mtr, mm_rupt, mm_uhyst, mm_aicu, pay_rec, apgar5, dplural, sex, oegest_comb, dbwt, 
+         ab_aven6, ab_seiz, ab_nicu,
+         ca_anen, ca_mnsb, ca_cchd, ca_cdh, ca_omph, ca_gast, ca_limb) 
 
 natl2018 <- haven::read_stata("deidRaw/input/natl2018.dta")
 
@@ -43,8 +45,9 @@ natl2018 <- natl2018 %>%
          rf_pdiab, rf_gdiab, rf_phype, rf_ghype, rf_ehype,
          ob_ecvs, ob_ecvf,
          ld_indl, ld_augm, ld_ster, ld_antb, ld_chor, ld_anes,
-         mm_mtr, mm_rupt, mm_uhyst, mm_aicu, pay_rec, apgar5, sex, oegest_comb, dbwt,
-         ab_aven6, ab_seiz, ab_nicu)
+         mm_mtr, mm_rupt, mm_uhyst, mm_aicu, pay_rec, apgar5, dplural, sex, oegest_comb, dbwt,
+         ab_aven6, ab_seiz, ab_nicu,
+         ca_anen, ca_mnsb, ca_cchd, ca_cdh, ca_omph, ca_gast, ca_limb) 
 
 natl2019 <- haven::read_stata("deidRaw/input/natl2019.dta")
 
@@ -55,8 +58,9 @@ natl2019 <- natl2019 %>%
          RF_PDIAB, RF_GDIAB, RF_PHYPE, RF_GHYPE, RF_EHYPE,
          OB_ECVS, OB_ECVF,
          LD_INDL, LD_AUGM, LD_STER, LD_ANTB, LD_CHOR, LD_ANES,
-         MM_MTR, MM_RUPT, MM_UHYST, MM_AICU, PAY_REC, APGAR5, sex, OEGest_Comb, dbwt,
-         AB_AVEN6, AB_SEIZ, AB_NICU) %>% 
+         MM_MTR, MM_RUPT, MM_UHYST, MM_AICU, PAY_REC, APGAR5, dplural, sex, OEGest_Comb, dbwt, 
+         AB_AVEN6, AB_SEIZ, AB_NICU,
+         CA_LIMB) %>% 
   rename(dob_yy = DOB_YY,
          bfacil3 = BFACIL3,
          mbstate_rec = MBSTATE_REC,
@@ -87,7 +91,14 @@ natl2019 <- natl2019 %>%
          oegest_comb = OEGest_Comb,
          ab_aven6 = AB_AVEN6,
          ab_seiz = AB_SEIZ,
-         ab_nicu = AB_NICU)
+         ab_nicu = AB_NICU,
+         ca_limb = CA_LIMB) %>% 
+  mutate(ca_anen = NA,
+         ca_mnsb = NA,
+         ca_cchd = NA,
+         ca_cdh = NA,
+         ca_omph = NA,
+         ca_gast = NA) 
 
 natl2020 <- haven::read_stata("deidRaw/input/natl2020.dta")
 
@@ -98,8 +109,9 @@ natl2020 <- natl2020 %>%
          RF_PDIAB, RF_GDIAB, RF_PHYPE, RF_GHYPE, RF_EHYPE, 
          OB_ECVS, OB_ECVF,
          LD_INDL, LD_AUGM, LD_STER, LD_ANTB, LD_CHOR, LD_ANES,
-         MM_MTR, MM_RUPT, MM_UHYST, MM_AICU, PAY_REC, APGAR5, sex, OEGest_Comb, dbwt,
-         AB_AVEN6, AB_SEIZ, AB_NICU) %>% 
+         MM_MTR, MM_RUPT, MM_UHYST, MM_AICU, PAY_REC, APGAR5, dplural, sex, OEGest_Comb, dbwt, 
+         AB_AVEN6, AB_SEIZ, AB_NICU,
+         CA_ANEN, CA_MNSB, CA_CCHD, CA_CDH, CA_OMPH, CA_GAST, CA_LIMB) %>% 
   rename(dob_yy = DOB_YY,
          bfacil3 = BFACIL3,
          mbstate_rec = MBSTATE_REC,
@@ -130,15 +142,24 @@ natl2020 <- natl2020 %>%
          oegest_comb = OEGest_Comb,
          ab_aven6 = AB_AVEN6,
          ab_seiz = AB_SEIZ,
-         ab_nicu = AB_NICU)
+         ab_nicu = AB_NICU,
+         ca_anen = CA_ANEN,
+         ca_mnsb = CA_MNSB,
+         ca_cchd = CA_CCHD,
+         ca_cdh = CA_CDH,
+         ca_omph = CA_OMPH,
+         ca_gast = CA_GAST,
+         ca_limb = CA_LIMB) 
 
-natl2016_2020 <- rbind(natl2016, natl2017, natl2018, natl2019, natl2020) 
+natl2016_2020 <- rbind(natl2016, natl2017, natl2018, natl2019, natl2020) # 2019 data missing many anomaly indicators
 
 rm(natl2016)
 rm(natl2017)
 rm(natl2018)
 rm(natl2019)
 rm(natl2020)
+
+# pausing here to see if SAS 2019 dataset has missing vars
 
 natl2016_2020 <- natl2016_2020 %>% 
   rename(year = dob_yy,
