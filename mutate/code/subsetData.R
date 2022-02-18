@@ -20,7 +20,7 @@ natl_subset3 <- natl_subset2 %>%
 nrow(natl_subset2) - nrow(natl_subset3)
 rm(natl_subset2)
 
-natl_subset <- natl_subset3 %>% 
+natl_gh <- natl_subset3 %>% 
   filter(anencephaly != 1 &
            spina_bifida != 1 &
            cyanotic_congen_hd != 1 &
@@ -29,9 +29,18 @@ natl_subset <- natl_subset3 %>%
            omphalocele != 1 &
            gastroschisis != 1 &
            limb_reduction != 1) # -294,319
-nrow(natl_subset3) - nrow(natl_subset) 
+nrow(natl_subset3) - nrow(natl_gh) 
 rm(natl_subset3)
 
-sapply(natl_subset[1:52], summary)
+sapply(natl_gh[1:52], summary)
 
-save(natl_subset, file = "mutate/output/natl_subset.RData")
+natl_gh <- natl_gh %>% 
+  select(year, mom_age, mom_nativity, mom_race_ethnicity, mom_marital_status, mom_educ,
+         month_prenatal_start, nb_prenatal_visits, wic, nb_cig_before_preg, nb_cig_first_trimester, nb_cig_second_trimester, nb_cig_third_trimester,
+         bmi, pre_preg_diabetes, gest_diabetes, pre_preg_htn, gest_htn, eclampsia,
+         maternal_transfusion, ruptured_uterus, unplanned_hysterectomy, maternal_icu,
+         payer, baby_sex, 
+         gest_age, birthweight,
+         assisted_ventilation_six_hr, baby_seizures, baby_nicu)
+
+save(natl_gh, file = "mutate/output/natl_gh.RData")
