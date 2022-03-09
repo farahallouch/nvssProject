@@ -16,11 +16,37 @@ nrow(natl_subset1) - nrow(natl_subset2)
 rm(natl_subset1)
 
 natl_subset3 <- natl_subset2 %>% 
-  filter(gest_age >= 23 & gest_age <= 41) # -2,305
+  filter(!is.na(payer)) # -7,022
 nrow(natl_subset2) - nrow(natl_subset3)
 rm(natl_subset2)
 
-natl_gh <- natl_subset3 %>% 
+natl_subset4 <- natl_subset3 %>% 
+  filter(!is.na(maternal_transfusion) &
+           !is.na(ruptured_uterus) &
+           !is.na(unplanned_hysterectomy) &
+           !is.na(maternal_icu) &
+           !is.na(assisted_ventilation_six_hr) &
+           !is.na(baby_seizures) &
+           !is.na(baby_nicu) &
+           !is.na(birthweight) &
+           !is.na(gest_age)) # -2,315
+nrow(natl_subset3) - nrow(natl_subset4) 
+rm(natl_subset3)
+
+natl_subset5 <- natl_subset4 %>% 
+  filter(!is.na(mom_age) &
+           !is.na(mom_educ) &
+           !is.na(mom_nativity) &
+           !is.na(mom_race_ethnicity)) # -21,573
+nrow(natl_subset4) - nrow(natl_subset5) 
+rm(natl_subset4)
+
+natl_subset6 <- natl_subset5 %>% 
+  filter(gest_age >= 23 & gest_age <= 41) # -1,863
+nrow(natl_subset5) - nrow(natl_subset6)
+rm(natl_subset5)
+
+natl_gh <- natl_subset6 %>% 
   filter(anencephaly != 1 &
            spina_bifida != 1 &
            cyanotic_congen_hd != 1 &
@@ -28,9 +54,9 @@ natl_gh <- natl_subset3 %>%
            congen_diaph_hernia != 1 &
            omphalocele != 1 &
            gastroschisis != 1 &
-           limb_reduction != 1) # -294,319
-nrow(natl_subset3) - nrow(natl_gh) 
-rm(natl_subset3)
+           limb_reduction != 1) # -286,696
+nrow(natl_subset6) - nrow(natl_gh) 
+rm(natl_subset6)
 
 sapply(natl_gh[1:52], summary)
 
