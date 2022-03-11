@@ -1,0 +1,82 @@
+---
+title: "Reproductive Epidemiology - Data Analysis"
+author: "Farah Allouch"
+date: "`r format(Sys.time(), ' %B %d, %Y')`"
+output: 
+  word_document:
+    toc: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE,
+                      warning = FALSE,
+                      message = FALSE)
+
+rm(list = ls())
+options(scipen = 999)
+
+library(tidyverse)
+```
+
+\newpage
+# Exposure, outcome, and confounders
+This is an analysis looking at the association between payer of delivery and low birthweight in women with gestational hypertension (indicated on birth certificate) who delivered in the US between 2016 and 2020.
+
+My main exposure is payer of birth episode (self-payer (reference), Medicaid, private, or other)
+
+My main outcome is low birthweight (< 2,500 g)
+
+My confounders are maternal age at delivery (< 20, 20-26 (reference), 27-34, 35+), maternal education (< high school, high school or GED, some college, college and above (reference)), maternal nativity (born in US (reference), born outside US), and maternal race/ethnicity (Non-Hispanic white (reference), Non-Hispanic Black, Non-Hispanic Asian, native Hawaiian or Other Pacific Islander, Non-Hispanic American Indian or Alaska Native, Hispanic).
+
+# Frequency table
+```{r}
+load("../mutate/output/natl_gh_outcomes.Rdata")
+
+library(gtsummary)
+
+natl_gh <- natl_gh %>% 
+  mutate(Payer = payer,
+         "Low birthweight" = lbw,
+         "Maternal age" = mom_age_cat,
+         "Maternal education" = mom_educ_cat,
+         "Maternal nativity" = mom_nativity,
+         "Maternal race/ethnicity" = mom_race_ethnicity_cat)
+
+natl_gh %>% 
+  select(Payer, "Low birthweight", "Maternal age", "Maternal education", "Maternal nativity", "Maternal race/ethnicity") %>% 
+  tbl_summary(by = Payer) %>% 
+  bold_labels()
+```
+
+From the table above, we can see that rates of low birthweight are highest in women with Medicaid or self-pay at delivery. Also, there are more younger women (< 20) with Medicaid at delivery than any of the other payer categories. There are substantially more women with less than high school education in the self-pay category than any of the other payer categories. There are substantially more women who were born outside the US and who were Hispanic in the self-pay category than any of the other payer categories.
+
+# Unadjusted analysis
+```{r}
+epitools::epitab(table(natl_gh$payer, natl_gh$lbw),
+                 method = "riskratio")
+```
+
+The above results are the four-by-two table for the exposure (insurance status) and outcome (LBW). 
+
+In women with gestational hypertension, the risk of delivering a LBW infant with Medicaid insurance is 1.174 (95% CI: 1.164, 1.184) times the risk of delivering a LBW infant with private insurance. The 95% CI does not include the null value of 1, which gives us sufficient evidence to reject $H_0$, which suggests that having Medicaid insurance is associated with delivering LBW at the 5% significance level.
+
+In women with gestational hypertension, the risk of delivering a LBW infant with self-pay is 1.213 (95% CI: 1.814, 1.244) times the risk of delivering a LBW infant with private insurance. The 95% CI does not include the null value of 1, which gives us sufficient evidence to reject $H_0$, which suggests that self-pay at delivery is associated with delivering LBW at the 5% significance level.
+
+In women with gestational hypertension, the risk of delivering a LBW infant with other type of insurance is 0.999 (95% CI: 0.977, 1.023) times the risk of delivering a LBW infant with private insurance. The 95% CI includes the null value of 1, which does not give us sufficient evidence to reject $H_0$, which suggests that having other type of insurance at delivery is not associated with delivering LBW at the 5% significance level.
+
+# Multivariable regression model
+```{r}
+logit_model <- glm(lbw ~ payer + mom_age_cat + mom_educ_cat + mom_nativity + mom_race_ethnicity_cat,
+                   data = natl_gh,
+                   family = binomial(link = "logit"))
+
+tbl_regression(logit_model, exponentiate = TRUE)
+```
+
+We focus on the estimates from the main exposure (insurance status).
+
+After adjusting for maternal age, education, nativity, and race/ethnicity, in women with gestational hypertension, the odds of deliverying a LBW infant in women with Medicaid insurance at delivery is 1.06 (95% CI: 1.04, 1.07) times the odds of delivering a LBW infant in women with private insurance at delivery. The 95% CI does not include the null value of 1, which gives us sufficient evidence to reject $H_0$, which suggests that having Medicaid insurance is associated with delivering LBW at the 5% significance level.
+
+After adjusting for maternal age, education, nativity, and race/ethnicity, in women with gestational hypertension, the odds of deliverying a LBW infant in women with self-pay at delivery is 1.11 (95% CI: 1.08, 1.15) times the odds of delivering a LBW infant in women with private insurance at delivery. The 95% CI does not include the null value of 1, which gives us sufficient evidence to reject $H_0$, which suggests that having self-pay at delivery is associated with delivering LBW at the 5% significance level.
+
+After adjusting for maternal age, education, nativity, and race/ethnicity, in women with gestational hypertension, the odds of deliverying a LBW infant in women with other insurance at delivery is 0.95 (95% CI: 0.93, 0.98) times the odds of delivering a LBW infant in women with private insurance at delivery. The 95% CI does not include the null value of 1, which gives us sufficient evidence to reject $H_0$, which suggests that having other insurance at delivery is associated with delivering LBW at the 5% significance level.
