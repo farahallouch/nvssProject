@@ -159,7 +159,7 @@ rm(natl2018)
 rm(natl2019)
 rm(natl2020)
 
-# start here
+save(natl2016_2020, file = "deidRaw/output/natl2016_2020.Rdata")
 
 natl2016_2020 <- natl2016_2020 %>% 
   rename(year = dob_yy,
