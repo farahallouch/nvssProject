@@ -1,0 +1,118 @@
+---
+title: "NVSS project - tables"
+author: "Farah Allouch"
+date: "`r format(Sys.time(), ' %B %d, %Y')`"
+output: 
+  word_document:
+    toc: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE,
+                      warning = FALSE,
+                      message = FALSE)
+
+rm(list = ls())
+options(scipen = 999)
+
+library(tidyverse)
+```
+
+\newpage
+# Table 1
+```{r}
+load("C:/Users/fallouch/Box/PhD/NVSS/nvssProject/mutate/output/natl_gh_outcomes.Rdata")
+
+library(gtsummary)
+
+natl_gh %>% 
+  select(payer, maternal_outcomes, baby_outcomes, ptb, lbw, sga, mom_age_cat, mom_educ_cat, mom_nativity, mom_race_ethnicity_cat, mom_marital_status, plurality, prenatal_care, preg_smoking, year) %>% 
+  tbl_summary(by = payer) %>% 
+  bold_labels()
+```
+
+# Unadjusted and adjusted models
+## Maternal outcomes
+```{r}
+unadjusted_maternal_outcomes <- glm(maternal_outcomes ~ payer,
+                                    data = natl_gh,
+                                    family = binomial(link = "logit"))
+
+adjusted_maternal_outcomes <- glm(maternal_outcomes ~ payer + mom_age_cat + mom_educ_cat + mom_nativity + mom_race_ethnicity_cat,
+                                    data = natl_gh,
+                                    family = binomial(link = "logit"))
+
+tbl_merge(tbls = list(tbl_regression(unadjusted_maternal_outcomes,
+                                     exponentiate = TRUE),
+                      tbl_regression(adjusted_maternal_outcomes,
+                                     exponentiate = TRUE)),
+          tab_spanner = c("**Unadjusted model**", "**Adjusted model**"))
+```
+
+## Baby outcomes
+```{r}
+unadjusted_baby_outcomes <- glm(baby_outcomes ~ payer,
+                                    data = natl_gh,
+                                    family = binomial(link = "logit"))
+
+adjusted_baby_outcomes <- glm(baby_outcomes ~ payer + mom_age_cat + mom_educ_cat + mom_nativity + mom_race_ethnicity_cat,
+                                    data = natl_gh,
+                                    family = binomial(link = "logit"))
+
+tbl_merge(tbls = list(tbl_regression(unadjusted_baby_outcomes,
+                                     exponentiate = TRUE),
+                      tbl_regression(adjusted_baby_outcomes,
+                                     exponentiate = TRUE)),
+          tab_spanner = c("**Unadjusted model**", "**Adjusted model**"))
+```
+
+## Preterm birth
+```{r}
+unadjusted_ptb <- glm(ptb ~ payer,
+                                    data = natl_gh,
+                                    family = binomial(link = "logit"))
+
+adjusted_ptb <- glm(ptb ~ payer + mom_age_cat + mom_educ_cat + mom_nativity + mom_race_ethnicity_cat,
+                                    data = natl_gh,
+                                    family = binomial(link = "logit"))
+
+tbl_merge(tbls = list(tbl_regression(unadjusted_ptb,
+                                     exponentiate = TRUE),
+                      tbl_regression(adjusted_ptb,
+                                     exponentiate = TRUE)),
+          tab_spanner = c("**Unadjusted model**", "**Adjusted model**"))
+```
+
+## Low birthweight
+```{r}
+unadjusted_lbw <- glm(lbw ~ payer,
+                                    data = natl_gh,
+                                    family = binomial(link = "logit"))
+
+adjusted_lbw <- glm(lbw ~ payer + mom_age_cat + mom_educ_cat + mom_nativity + mom_race_ethnicity_cat,
+                                    data = natl_gh,
+                                    family = binomial(link = "logit"))
+
+tbl_merge(tbls = list(tbl_regression(unadjusted_lbw,
+                                     exponentiate = TRUE),
+                      tbl_regression(adjusted_lbw,
+                                     exponentiate = TRUE)),
+          tab_spanner = c("**Unadjusted model**", "**Adjusted model**"))
+```
+
+## Small for gestational age
+```{r}
+unadjusted_sga <- glm(sga ~ payer,
+                                    data = natl_gh,
+                                    family = binomial(link = "logit"))
+
+adjusted_sga <- glm(sga ~ payer + mom_age_cat + mom_educ_cat + mom_nativity + mom_race_ethnicity_cat,
+                                    data = natl_gh,
+                                    family = binomial(link = "logit"))
+
+tbl_merge(tbls = list(tbl_regression(unadjusted_sga,
+                                     exponentiate = TRUE),
+                      tbl_regression(adjusted_sga,
+                                     exponentiate = TRUE)),
+          tab_spanner = c("**Unadjusted model**", "**Adjusted model**"))
+```
