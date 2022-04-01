@@ -6,17 +6,19 @@ library(tidyverse)
 load("deidRaw/output/natl2016_2020.Rdata")
 
 natl_subset1 <- natl2016_2020 %>% 
-  filter(gest_htn == 1) # -17,646,513
+  filter(gest_htn == 1 |
+           pre_preg_htn == 1 |
+           eclampsia == 1) # -17,212,574
 nrow(natl2016_2020) - nrow(natl_subset1)
 rm(natl2016_2020)
 
 natl_subset2 <- natl_subset1 %>% 
-  filter(facility == 1) # -1,956
+  filter(facility == 1) # -2,808
 nrow(natl_subset1) - nrow(natl_subset2)
 rm(natl_subset1)
 
 natl_subset3 <- natl_subset2 %>% 
-  filter(!is.na(payer)) # -7,022
+  filter(!is.na(payer)) # -9,605
 nrow(natl_subset2) - nrow(natl_subset3)
 rm(natl_subset2)
 
@@ -30,7 +32,7 @@ natl_subset4 <- natl_subset3 %>%
            !is.na(five_min_apgar) &
            !is.na(baby_nicu) &
            !is.na(birthweight) &
-           !is.na(gest_age)) # -4,220
+           !is.na(gest_age)) # -5,842
 nrow(natl_subset3) - nrow(natl_subset4) 
 rm(natl_subset3)
 
@@ -38,12 +40,12 @@ natl_subset5 <- natl_subset4 %>%
   filter(!is.na(mom_age) &
            !is.na(mom_educ) &
            !is.na(mom_nativity) &
-           !is.na(mom_race_ethnicity)) # -21,503
+           !is.na(mom_race_ethnicity)) # -27,896
 nrow(natl_subset4) - nrow(natl_subset5) 
 rm(natl_subset4)
 
 natl_subset6 <- natl_subset5 %>% 
-  filter(gest_age >= 23 & gest_age <= 41) # -1,842
+  filter(gest_age >= 23 & gest_age <= 40) # -33,108
 nrow(natl_subset5) - nrow(natl_subset6)
 rm(natl_subset5)
 
@@ -55,7 +57,7 @@ natl_gh <- natl_subset6 %>%
            congen_diaph_hernia != 1 &
            omphalocele != 1 &
            gastroschisis != 1 &
-           limb_reduction != 1) # -286,344
+           limb_reduction != 1) # -370,183
 nrow(natl_subset6) - nrow(natl_gh) 
 rm(natl_subset6)
 
