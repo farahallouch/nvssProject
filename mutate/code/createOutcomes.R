@@ -5,6 +5,11 @@ library(tidyverse)
 
 load("C:/Users/fallouch/Box/PhD/NVSS/nvssProject/mutate/output/natl_gh.RData")
 
+expected_pnc_chart <- readxl::read_xlsx("C:/Users/fallouch/Desktop/expected_pnc.xlsx")
+
+natl_gh <- left_join(natl_gh, expected_pnc_chart, by = c("month_prenatal_start",
+                                                         "gest_age"))
+
 # ten_pct_weightList_male <- c(375, 436, 497, 561, 629, 706, 802, 924, 1068, 1231, 1415, 1627, 1859, 2105, 2355, 2588, 2782, 2926, 3017, 3065, 3082, 3067, 3027)
 # ten_pct_weightList_female <- c(354, 416, 473, 529, 597, 677, 770, 882, 1018, 1166, 1335, 1538, 1772, 2021, 2261, 2477, 2665, 2810, 2904, 2958, 2985, 2981, 2952)
 # gestAge <- c(22:44)
@@ -18,6 +23,7 @@ natl_gh <- natl_gh %>%
                                          baby_seizures == 1 |
                                          baby_nicu == 1 |
                                          five_min_apgar < 7, 1, 0)),
+         apgar_less_7 = factor(ifelse(five_min_apgar < 7, 1, 0)),
          ptb = factor(ifelse(gest_age < 37, 1, 0)),
          lbw = factor(ifelse(birthweight < 2500, 1, 0)),
          sga = factor(ifelse((baby_sex == 0 & gest_age == 22 & birthweight < 375) | # male
@@ -107,6 +113,22 @@ natl_gh <- natl_gh %>%
                                         mom_marital_status == 2 ~ "Unmarried"),
          plurality = case_when(plurality == 1 ~ "1",
                                plurality == 2 ~ "2",
-                               plurality >= 3 ~ "3+"))
+                               plurality >= 3 ~ "3+"),
+         expected_pnc = ifelse(expected_pnc == 0, 0.001, expected_pnc),
+         adeq_services = round((nb_prenatal_visits / expected_pnc * 100)),
+         apcnu = case_when((month_prenatal_start == 0 &
+                              nb_prenatal_visits == 0) ~ "Inadequate",
+                           (month_prenatal_start >= 5 |
+                              adeq_services < 50) ~ "Inadequate",
+                           (month_prenatal_start %in% (1 : 4) &
+                              between(adeq_services, 50, 79)) ~ "Intermediate",
+                           (month_prenatal_start %in% (1 : 4) &
+                              between(adeq_services, 80, 109)) ~ "Adequate",
+                           (month_prenatal_start %in% (1 : 4) &
+                              adeq_services >= 110) ~ "Adequate Plus"),
+         apcnu = factor(apcnu, levels = c("Adequate Plus",
+                                          "Adequate",
+                                          "Intermediate",
+                                          "Inadequate")))
 
 save(natl_gh, file = "mutate/output/natl_gh_outcomes.Rdata")
