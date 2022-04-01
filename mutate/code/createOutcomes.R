@@ -5,6 +5,7 @@ library(tidyverse)
 
 load("C:/Users/fallouch/Box/PhD/NVSS/nvssProject/mutate/output/natl_gh.RData")
 
+# Taken from Kotelchuck, M. (1994). The Adequacy of Prenatal Care Utilization Index: its US distribution and association with low birthweight. American journal of public health, 84(9), 1486-1489.
 expected_pnc_chart <- readxl::read_xlsx("C:/Users/fallouch/Desktop/expected_pnc.xlsx")
 
 natl_gh <- left_join(natl_gh, expected_pnc_chart, by = c("month_prenatal_start",
