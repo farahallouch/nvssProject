@@ -401,7 +401,7 @@ tbl_merge(tbls = list(tbl_regression(adjusted_sga,
                                      exponentiate = TRUE)),
           tab_spanner = c("**Exposure-outcome model**",
                           "**Exposure, mediator-outcome model**")) %>% 
-  modify_caption("Table 18. Small for gestational age - mediation analysis") %>%
+  modify_caption("Table 19. Small for gestational age - mediation analysis") %>%
   as_flex_table() %>%
   flextable::save_as_docx(path = "./analysis/output/sga_mediation.docx")
 
