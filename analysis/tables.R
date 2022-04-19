@@ -7,7 +7,7 @@ library(gtsummary)
 load("C:/Users/fallouch/Box/PhD/NVSS/nvssProject/mutate/output/natl_gh_outcomes.Rdata")
 
 natl_gh1 <- natl_gh %>% 
-  filter(!is.na(apcnu)) # -40,157
+  filter(!is.na(apcnu)) # -50,601
 nrow(natl_gh) - nrow(natl_gh1)
 rm(natl_gh)
 
